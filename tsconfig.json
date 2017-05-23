@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "outDir": "dist",
+    "moduleResolution": "node",
+    "pretty": true,
+    "sourceMap": false,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "removeComments": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "preserveConstEnums": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "name": "express-rest",
+  "version": "1.0.0",
+  "description": "REST Express Service built with Typescript",
+  "main": "server.js",
+  "scripts": {
+    "test": "./node_modules/gulp/bin/gulp.js server-test",
+    "start": "./node_modules/gulp/bin/gulp.js server"
+  },
+  "keywords": [
+    "REST",
+    "Express",
+    "Service",
+    "Typescript"
+  ],
+  "author": "Jacob Brandt",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
+    "mongoose": "^4.10.1",
+    "q": "^1.5.0",
+    "winston": "^2.3.1"
+  },
+  "devDependencies": {
+    "@types/body-parser": "^1.16.3",
+    "@types/express": "^4.0.35",
+    "@types/mongoose": "^4.7.13",
+    "@types/node": "^7.0.22",
+    "@types/q": "^1.0.0",
+    "@types/winston": "^2.3.2",
+    "del": "^2.2.2",
+    "gulp": "^3.9.1",
+    "gulp-istanbul": "^1.1.1",
+    "gulp-mocha": "^4.3.1",
+    "gulp-nodemon": "^2.2.1",
+    "gulp-tslint": "^8.0.0",
+    "gulp-typescript": "^3.1.6",
+    "tslint": "^5.3.2",
+    "typescript": "^2.3.3"
+  }
+}

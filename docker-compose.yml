@@ -1,0 +1,15 @@
+express_rest:
+  build: .
+  ports:
+    - "32000:5000"
+  volumes:
+    - ./src:/code/express-rest/src
+  links:
+    - express_rest_mongo:mongo
+express_rest_mongo:
+  image: mongo
+  # Use this volume mount to get mongo to use a mapped volume
+  # or comment out to get fresh db in container only.
+  command: mongod --smallfiles --storageEngine=wiredTiger
+  ports:
+    - "27017:27017"
