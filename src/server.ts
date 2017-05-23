@@ -2,10 +2,13 @@ import * as express from "express";
 import * as bodyParser from "body-parser";
 import * as http from "http";
 import * as Q from "q";
+import * as cors from "cors";
 
 import { log } from "./utils/logging";
 import { dbConnect, dbInitialize, dbDisconnect } from "./utils/db.util";
 import { ServerConfig } from "./config/server";
+import { RoleRoutes } from "./routes/role.routes";
+import { UserRoutes } from "./routes/user.routes";
 
 class Server {
   public app: express.Application;
@@ -37,9 +40,6 @@ class Server {
       .then((connectionResult) => {
         return dbInitialize();
       })
-      // .then((dbInitResult) => {
-      //   return migrate();
-      // })
       .then((dbInitResult) => {
         return Q(this.server = this.app.listen(ServerConfig.getServerPort(), () => {
           log.info("Server up and awaiting requests...");
@@ -78,28 +78,14 @@ class Server {
 
   private routes(): Q.Promise<{}> {
     // Allow Cross origin resource sharing
-    return Q(true)
-    // return Q(this.app.use(cors()))
-      // .then((corsResult) => {
-      //   return Q(new AuthRoutes(this.app));
-      // })
-      // // All routes below this are protected with the JWT strategy
-      // .then((authResult) => {
-      //   return Q(new UserRoutes(this.app));
-      // })
-      // .then((userResult) => {
-      //   return Q(new CourseRoutes(this.app));
-      // })
-      // .then((userResult) => {
-      //   return Q(new RoleRoutes(this.app));
-      // })
-      // .then((userResult) => {
-      //   return Q(new TermRoutes(this.app));
-      // })
-      // .then((courseResult) => {
-      //   return Q(new PermissionRoutes(this.app));
-      // })
-      .then((permResult) => {
+    return Q(this.app.use(cors()))
+      .then((authResult) => {
+        return Q(new UserRoutes(this.app));
+      })
+      .then((userResult) => {
+        return Q(new RoleRoutes(this.app));
+      })
+      .then((corsResult) => {
         return Q(this.app.use(this.errorHandler));
       })
       .catch(log.error.bind(console));

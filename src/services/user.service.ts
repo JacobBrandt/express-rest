@@ -16,7 +16,7 @@ export class UserService extends CrudService<UserModel> {
   }
 
   public getRolesOnUser(userid: string, req: any, res: express.Response, next: express.NextFunction) {
-    this.getModel().find({ _id: userid }, "permissions")
+    this.getModel().find({ _id: userid }, "roles")
       .populate("roles.authorized_by", UserService.userPopulateFields())
       .exec((err: any, doc: any) => {
         this.handleResponse(err, doc, res, next);

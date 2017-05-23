@@ -21,12 +21,18 @@ This repository can be used to quickly bring up a RESTful node server that conne
 * Admin user can be changed in src/config/app.ts
 * Logging options can be changed in src/config/logging.ts
 
+#### Adding node dependencies
+* Whenever a new node module dependency is added you will need to rebuild the docker container image
+
+#### Developing
+* Nodemon is enabled to watch for changes to the src directory.  Changes will cause the service to restart when in development mode.
+
 #### How to run tests?
 * npm test
 
 #
 
-## Contribution guidelines ###
+## Contribution guidelines
 
 * New features should be accompanied by tests
 * Code reviews will be required by all pull requests
