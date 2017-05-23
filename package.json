@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "REST Express Service built with Typescript",
   "main": "server.js",
+  "private": true,
   "scripts": {
     "test": "./node_modules/gulp/bin/gulp.js server-test",
     "start": "./node_modules/gulp/bin/gulp.js server"
