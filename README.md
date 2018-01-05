@@ -14,7 +14,7 @@ This repository can be used to quickly bring up a RESTful node server that conne
 * Clone repo
 * Set configuration (Change admin user, server name)
 * Launch docker containers
-* [Check Service](http://localhost:32000)
+* [Check Service](http://localhost:5000)
 
 #### Configuration
 * You can change the server name in src/config/server.ts
