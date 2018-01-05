@@ -1,5 +1,0 @@
-#!/usr/bin/env node
-
-var expressRest = require("./dist/server.js");
-expressRest.initialize()
-  .catch(console.log.bind(console));

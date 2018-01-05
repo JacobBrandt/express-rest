@@ -38,7 +38,7 @@ export class UserRoutes extends CrudRoutes<UserService, UserModel> {
   }
 
   protected canGetAll(): ((req: any, res: express.Response, next: express.NextFunction) => void)[] {
-    return [rmw.requireRole(UserRoleType.Admin)];
+    return [rmw.authenticated(), rmw.requireRole(UserRoleType.Admin)];
   }
 
   protected canCreate(): ((req: any, res: express.Response, next: express.NextFunction) => void)[] {

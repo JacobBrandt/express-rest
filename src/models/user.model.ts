@@ -5,7 +5,6 @@ import * as Q from "q";
 
 import { log } from "../utils/logging";
 import { Role } from "./role.model";
-import { AppConfig } from "../config/app";
 
 interface User {
   email: string;
@@ -39,7 +38,11 @@ const userSchema: mongoose.Schema = new mongoose.Schema({
     required: true,
     default: true
   },
-  created_date: Date,
+  created_date: {
+    type: Date,
+    required: true,
+    default: Date.now
+  },
   // Roles
   roles: [{
     name: {

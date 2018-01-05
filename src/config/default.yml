@@ -1,0 +1,7 @@
+mongo:
+  database: express
+  uri: localhost:27017
+  port: 5000
+loggingLevel: debug
+adminUserEmail: admin@mycompany.com
+unauthorizedUrl: unauthorized

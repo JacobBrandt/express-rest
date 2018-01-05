@@ -1,10 +1,21 @@
 import * as express from "express";
 import { PermissionUtil } from "../utils/permission.util";
+const config = require("config");
+
+export function authenticate(): (req: any, res: express.Response, next: express.NextFunction) => void {
+  return function (req: any, res: express.Response, next: express.NextFunction) {
+    // Place authentication logic here
+    req.user = {name: "Admin", roles: [{name: "admin"}]};
+    next();
+  };
+}
 
 export function authenticated(): (req: any, res: express.Response, next: express.NextFunction) => void {
   return function(req: any, res: express.Response, next: express.NextFunction) {
-    // TODO: Add your authentication logic here
-    return next();
+    if (req.user) {
+      return next();
+    }
+    res.redirect(config.unauthorizedUrl);
   };
 }
 

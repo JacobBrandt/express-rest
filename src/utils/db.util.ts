@@ -4,8 +4,8 @@ import * as Q from "q";
 // is deprecated
 (<any>mongoose).Promise = require("q").Promise;
 
+const config = require("config");
 import { log } from "../utils/logging";
-import { AppConfig } from "../config/app";
 import { ServerConfig } from "../config/server";
 import { UserModel } from "../models/user.model";
 
@@ -43,7 +43,7 @@ export function dbDisconnect(): Q.Promise<any> {
  */
 function createAdminUser(): Q.Promise<any> {
   log.debug("Checking for admin user");
-  return Q(UserModel.findOne({ email: AppConfig.adminUserEmail }).exec())
+  return Q(UserModel.findOne({ email: config.adminUserEmail }).exec())
     .then((adminUser) => {
       if (adminUser) {
         log.debug("Admin user already exists");
@@ -51,7 +51,7 @@ function createAdminUser(): Q.Promise<any> {
       } else {
         log.info("Admin user does not exist; creating...");
         const newUser = new UserModel({
-          email: AppConfig.adminUserEmail,
+          email: config.adminUserEmail,
           display_name: "Admin",
           enabled: true
         });

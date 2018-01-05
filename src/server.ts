@@ -9,6 +9,7 @@ import { dbConnect, dbInitialize, dbDisconnect } from "./utils/db.util";
 import { ServerConfig } from "./config/server";
 import { RoleRoutes } from "./routes/role.routes";
 import { UserRoutes } from "./routes/user.routes";
+import * as rmw from "./routes/route.middleware";
 
 class Server {
   public app: express.Application;
@@ -19,6 +20,7 @@ class Server {
     this.app = express();
     this.app.use(bodyParser.urlencoded({extended: true}));
     this.app.use(bodyParser.json());
+    this.app.use(rmw.authenticate());
     const router = express.Router();
     // placeholder route handler
     router.get("/", (req, res, next) => {
@@ -79,13 +81,16 @@ class Server {
   private routes(): Q.Promise<{}> {
     // Allow Cross origin resource sharing
     return Q(this.app.use(cors()))
-      .then((authResult) => {
+      // .then((corsResult) => {
+      //   return Q(this.app.use(cors()));
+      // })
+      .then((corsResult) => {
         return Q(new UserRoutes(this.app));
       })
       .then((userResult) => {
         return Q(new RoleRoutes(this.app));
       })
-      .then((corsResult) => {
+      .then((roleRoutes) => {
         return Q(this.app.use(this.errorHandler));
       })
       .catch(log.error.bind(console));
@@ -99,4 +104,5 @@ class Server {
 
 log.info("Starting server...");
 const server: Server = new Server();
+server.initialize();
 export = server;

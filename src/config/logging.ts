@@ -1,5 +1,7 @@
 "use strict";
 
+const config = require("config");
+
 class LoggingConfiguration {
   private static config: LoggingConfiguration;
 
@@ -24,7 +26,7 @@ class LoggingConfiguration {
     return {
       "timestamp": true,
       "colorize": true,
-      "level": loggingLevel
+      "level": config.loggingLevel
     };
   }
 }

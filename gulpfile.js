@@ -1,5 +1,6 @@
 const gulp = require('gulp');
 const typescript = require('gulp-typescript');
+const sourcemaps = require('gulp-sourcemaps');
 const tslint = require('gulp-tslint');
 const mocha = require('gulp-mocha');
 const istanbul = require('gulp-istanbul');
@@ -13,12 +14,13 @@ const typescriptConfig = require('./tsconfig.json');
  */
 gulp.task('server', ['compile'], function() {
   nodemon({
-    script: 'express-rest',
+    script: 'dist/server.js',
     watch: [ 'src/**/*.ts', 'express-rest' ],
     ext: 'ts',
     ignore: 'src/test/**/*.ts',
     env: {
-      'NODE_ENV': 'development'
+      'NODE_ENV': 'development',
+      'NODE_CONFIG_DIR': 'src/config'
     },
     tasks: function(changedFiles) {
       changedFiles.forEach(function (file) {
@@ -38,12 +40,8 @@ gulp.task('server', ['compile'], function() {
 gulp.task('server-test', ['pre-test'], function() {
   return gulp.src(['dist/test/**/*.js'])
     .pipe(mocha({
-      reporter: 'nyan',
-      delay: true
+      reporter: 'nyan'
     }))
-    .on('error', () => {
-      process.exit(1);
-    })
     .pipe(istanbul.writeReports())
     .pipe(istanbul.enforceThresholds({
       thresholds: {
@@ -52,6 +50,9 @@ gulp.task('server-test', ['pre-test'], function() {
         lines: 50
       }
     }))
+    .on('error', () => {
+      process.exit(1);
+    })
     .on('end', () => {
       process.exit(0);
     });
@@ -69,12 +70,26 @@ gulp.task('compile', ['clean', 'lint'], function() {
  * Compile server test code from typescript to js
  */
 gulp.task('compile-test', ['clean-test', 'lint-test'], function() {
-  return compile(['src/test/**/*.ts'], 'dist/test');
+  return compile(['src/test/**/*.ts'], 'dist');
 });
 
 function compile(globArray, destDir) {
   var stream = gulp.src(globArray, {follow: true})
+    .pipe(sourcemaps.init())
     .pipe(typescript(typescriptConfig.compilerOptions))
+    .pipe(sourcemaps.write(".", {
+      mapSources: (path) => {
+        return path;
+        //if (destDir.indexOf("test") === -1) {
+        //  return path;
+        //}
+        //else {
+        //  return "../" + path;
+        //}
+      },
+      sourceRoot: function(file) {
+        return file.cwd + "/" + destDir;
+      }}))
     .pipe(gulp.dest(destDir));
   return stream;
 }
