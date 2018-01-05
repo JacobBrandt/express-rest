@@ -17,9 +17,7 @@ This repository can be used to quickly bring up a RESTful node server that conne
 * [Check Service](http://localhost:5000)
 
 #### Configuration
-* You can change the server name in src/config/server.ts
-* Admin user can be changed in src/config/app.ts
-* Logging options can be changed in src/config/logging.ts
+All configuration is done through YAML files.  The default.yml file is used for development.  You can create additional configuration files to use for different NODE environments (like test and production).
 
 #### Adding node dependencies
 * Whenever a new node module dependency is added you will need to rebuild the docker container image
