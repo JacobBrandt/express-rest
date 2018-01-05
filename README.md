@@ -14,7 +14,7 @@ This repository can be used to quickly bring up a RESTful node server that conne
 * Clone repo
 * Set configuration (Change admin user, server name)
 * Launch docker containers
-* [Check Service](http://localhost:5000)
+* [Check Service](http://localhost:32000)
 
 #### Configuration
 All configuration is done through YAML files.  The default.yml file is used for development.  You can create additional configuration files to use for different NODE environments (like test and production).
